@@ -2,25 +2,9 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/donkeysharp/eazy-panel/services"
 	"net/http"
 )
-
-func foobar() {
-	clusters, err := services.GetECSClustersByPattern("reconmvs", false)
-	if err != nil {
-		fmt.Println("Error getting clusters")
-		return
-	}
-
-	for _, cluster := range clusters {
-		if len(cluster.Tasks) == 11 {
-			fmt.Println(cluster.Arn)
-			fmt.Println(services.GetTaskDefinitionByArn(cluster.Tasks[0].TaskDefinitionArn))
-		}
-	}
-}
 
 func clusterHandler(w http.ResponseWriter, r *http.Request) {
 	clusters, _ := services.GetECSClustersByPattern("reconmvs", true)
@@ -29,7 +13,22 @@ func clusterHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(clusters)
 }
 
+func taskDefinitionHandler(w http.ResponseWriter, r *http.Request) {
+	taskArn := r.URL.Query().Get("taskArn")
+	w.Header().Set("Content-Type", "application/json")
+
+	if len(taskArn) == 0 {
+		w.Write([]byte("null"))
+		return
+	}
+
+	taskDefinition, _ := services.GetECSTaskDefinitionByArn(&taskArn)
+
+	json.NewEncoder(w).Encode(taskDefinition)
+}
+
 func main() {
 	http.HandleFunc("/api/clusters", clusterHandler)
+	http.HandleFunc("/api/taskDefinition", taskDefinitionHandler)
 	http.ListenAndServe(":8000", nil)
 }

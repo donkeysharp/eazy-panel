@@ -36,7 +36,7 @@ func GetECSClustersByPattern(pattern string, includeTasks bool) ([]*aws.ECSClust
 	return result, nil
 }
 
-func GetTaskDefinitionByArn(arn *string) (*ecs.TaskDefinition, error) {
+func GetECSTaskDefinitionByArn(arn *string) (*ecs.TaskDefinition, error) {
 	ecsClient, err := aws.NewECSClient()
 	if err != nil {
 		return nil, err
