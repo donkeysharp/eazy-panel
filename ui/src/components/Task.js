@@ -1,6 +1,27 @@
 import React, { Component } from 'react';
 
 class Task extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayDetails: false
+    }
+  }
+  handleDisplayDetailsClick(e) {
+    e.preventDefault();
+
+    this.setState({
+      displayDetails: !this.state.displayDetails
+    })
+  }
+  getDetails() {
+    if (!this.state.displayDetails) {
+      return <div></div>;
+    }
+    return <div className="details">
+      <p>details</p>
+    </div>
+  }
   render() {
     return (
       <div className="task">
@@ -16,11 +37,12 @@ class Task extends Component {
             {this.props.task.TaskDefinitionArn}
           </div>
           <div className="item task-view">
-            <i className="fa fa-eye"></i>
+            <a href="#" onClick={this.handleDisplayDetailsClick.bind(this)}>
+              <i className="fa fa-eye"></i>
+            </a>
           </div>
         </div>
-        <div className="details">
-        </div>
+        {this.getDetails()}
       </div>
     );
   }
