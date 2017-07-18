@@ -1,0 +1,31 @@
+.subtitle {
+  border-bottom: 1px #B2B2B2 solid;
+}
+.task .task-header {
+  background-color: #eee;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 4px 4px 0 0;
+}
+.task .task-header .item {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 5px;
+  vertical-align: top;
+}
+.task .task-header .item.task-id {
+  width: 20%;
+}
+.task .task-header .item.task-def {
+  width: 68%;
+  white-space: normal;
+}
+.task .task-header .item.task-view {
+  width: 5%;
+  text-align: right;
+}
+.task .details {
+  border: 1px #eee solid;
+}
