@@ -29,5 +29,7 @@
   text-align: right;
 }
 .task .details {
+  padding: 10px;
   border: 1px #eee solid;
+  font-size: 12px;
 }

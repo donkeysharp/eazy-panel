@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ContainerDetails from './ContainerDetails';
 
 class Task extends Component {
   constructor(props) {
@@ -13,13 +14,27 @@ class Task extends Component {
     this.setState({
       displayDetails: !this.state.displayDetails
     })
+    if (this.props.onTaskDefinitionLoad && !this.props.taskDefinition) {
+      this.props.onTaskDefinitionLoad(this.props.task.TaskDefinitionArn)
+    }
   }
   getDetails() {
     if (!this.state.displayDetails) {
       return <div></div>;
     }
+    let taskDefinition = this.props.taskDefinition;
+
+    if (!taskDefinition) {
+      return <div><i className="fa fa-spinner fa-spin"></i>&nbsp;Loading...</div>
+    }
+
     return <div className="details">
-      <p>details</p>
+      <p><b>Containers</b>:</p>
+      <ContainerDetails
+        taskDefinition={taskDefinition}
+        task={this.props.task}
+        containers={this.props.task.Containers}
+      />
     </div>
   }
   render() {

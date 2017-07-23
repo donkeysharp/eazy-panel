@@ -12,7 +12,8 @@ class EcsContainer extends Component {
         loading: false,
         data: [],
         current: -1
-      }
+      },
+      taskDefinitions: {}
     }
   }
   componentDidMount() {
@@ -27,7 +28,7 @@ class EcsContainer extends Component {
       this.setState({
         clusters: {
           loading: false,
-          data: data,
+          data: data || [],
           current: -1
         }
       })
@@ -42,13 +43,27 @@ class EcsContainer extends Component {
       }
     })
   }
+  handleTaskDefinitionLoad(taskDefinitionArn) {
+    let taskDefinitions = this.state.taskDefinitions;
+    $http.get('/api/taskDefinition', {
+      arn: taskDefinitionArn
+    }).then((res) => {
+      taskDefinitions[taskDefinitionArn] = res;
+      this.setState({ taskDefinitions: taskDefinitions });
+    })
+
+  }
   getClusterDetails() {
     if (this.state.clusters.current === -1) {
       return <div>No details</div>;
     }
     let clusters = this.state.clusters.data;
     let index = this.state.clusters.current;
-    return <ClusterBody cluster={clusters[index]} />
+    return <ClusterBody
+      cluster={clusters[index]}
+      taskDefinitions={this.state.taskDefinitions}
+      onTaskDefinitionLoad={this.handleTaskDefinitionLoad.bind(this)}
+    />
   }
   getBody() {
     if (this.state.clusters.loading) {
