@@ -14,7 +14,7 @@ func clusterHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func taskDefinitionHandler(w http.ResponseWriter, r *http.Request) {
-	taskArn := r.URL.Query().Get("taskArn")
+	taskArn := r.URL.Query().Get("arn")
 	w.Header().Set("Content-Type", "application/json")
 
 	if len(taskArn) == 0 {
