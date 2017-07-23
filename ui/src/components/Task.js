@@ -8,6 +8,11 @@ class Task extends Component {
       displayDetails: false
     }
   }
+  componentWillReceiveProps(nextProps) {
+    if (this.props.task.TaskArn !== nextProps.task.TaskArn) {
+      this.setState({ displayDetails: false });
+    }
+  }
   handleDisplayDetailsClick(e) {
     e.preventDefault();
 
