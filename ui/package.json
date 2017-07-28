@@ -13,6 +13,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "embed": "go-bindata -o ./ui_gen.go -ignore 'map|asset-manifest.json|service-worker.js' -pkg ui build/...",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   }

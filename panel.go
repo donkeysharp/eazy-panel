@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"github.com/donkeysharp/eazy-panel/services"
+	"github.com/donkeysharp/eazy-panel/ui"
 	"net/http"
 )
 
@@ -28,7 +29,9 @@ func taskDefinitionHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	http.Handle("/", http.FileServer(ui.AssetFS()))
 	http.HandleFunc("/api/clusters", clusterHandler)
 	http.HandleFunc("/api/taskDefinition", taskDefinitionHandler)
+
 	http.ListenAndServe(":8000", nil)
 }
